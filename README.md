@@ -1,4 +1,4 @@
-# aioleviosa
+# leviosapy
  ## Async communication with Leviosa Zone Hubs
 
  This module allows communication to Leviosa Motor Blinds Zone hubs. Mainly designed for Home Assistant, but should be usable for any other purpose. Exposed functionality is:
