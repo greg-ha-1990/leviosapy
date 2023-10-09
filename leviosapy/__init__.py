@@ -1,1 +1,1 @@
-from leviosapy.leviosapy import discover_leviosa_zones, LeviosaZoneHub, LeviosaShadeGroup
+from leviosapy.leviosapy import discover_leviosa_zones, validate_zone, CannotConnect, LeviosaZoneHub, LeviosaShadeGroup

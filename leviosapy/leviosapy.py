@@ -10,11 +10,26 @@ import logging
 from typing import Any, Mapping
 
 import aiohttp
+from aiohttp.client_exceptions import (
+    ServerConnectionError,
+    ServerDisconnectedError,
+    ServerTimeoutError,
+)
 import async_timeout
 from async_upnp_client.advertisement import SsdpAdvertisementListener
 
 _LOGGER = logging.getLogger(__name__)
 
+HUB_EXCEPTIONS = (
+    ServerDisconnectedError,
+    asyncio.TimeoutError,
+    ServerConnectionError,
+    ServerTimeoutError,
+)
+
+
+class CannotConnect(Exception):
+    """Error to indicate we cannot connect."""
 
 class LvsaApiError(Exception):
     """General Api error. Means we have a problem communication with
@@ -25,6 +40,25 @@ class LvsaApiResponseStatusError(LvsaApiError):
 
 class LvsaApiConnectionError(LvsaApiError):
     """Problem connecting to Leviosa hub."""
+
+async def validate_zone(websession, hub_address):
+    """Ensure the Leviosa Zone is up and running and get the FW version."""
+    try:
+        _LOGGER.debug("Contacting Zone: %s", hub_address)
+        hub = LeviosaZoneHub(
+            hub_ip=hub_address,
+            hub_name="tempZone",
+            websession=websession,
+        )
+        await hub.getHubInfo()
+        _LOGGER.debug("Zone firmware v: %s", hub.fwVer)
+    except HUB_EXCEPTIONS as err:
+        _LOGGER.exception(err)
+        return 'invalid'
+    except Exception as err:
+        _LOGGER.exception(err)
+        return 'unknown'
+    return hub.fwVer
 
 async def discover_leviosa_zones() -> dict:
     """Listen for Zone advertisements. Leviosa Zones

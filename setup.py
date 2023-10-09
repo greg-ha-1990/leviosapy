@@ -2,13 +2,13 @@ from distutils.core import setup
 setup(
   name = 'leviosapy',         # This package talks to a Leviosa Zone hub
   packages = ['leviosapy'],   
-  version = '0.1.2',           # Use source param in SsdpAdvertisementListener()
+  version = '0.1.3',           # Use source param in SsdpAdvertisementListener()
   license='APACHE 2.0',        # https://help.github.com/articles/licensing-a-repository
   description = 'AsyncIO compatible library to talk to a Leviosa Motor Shades Zone',   
   author = 'Gerardo Castillo',
   author_email = 'gcastillo@integrahome.net',
   url = 'https://github.com/greg-ha-1990/leviosapy',   
-  download_url = 'https://github.com/greg-ha-1990/leviosapy/archive/refs/tags/0.1.2.tar.gz',
+  download_url = 'https://github.com/greg-ha-1990/leviosapy/archive/refs/tags/0.1.3.tar.gz',
   keywords = ['Communication', 'AsyncIO', 'Leviosa Zone'],   
   install_requires=[
           'aiohttp>=3.7.4',
